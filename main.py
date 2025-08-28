@@ -1,11 +1,9 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+# Create the FastAPI app
+app = FastAPI(title="Betcode Converter", description="Convert booking codes between betting platforms", version="1.0")
 
+# Root endpoint
 @app.get("/")
 def root():
-    return {"message": "Welcome to Betcode Backend!"}
-
-@app.get("/test")
-def test():
-    return {"status": "OK", "info": "Your backend is live!"}
+    return {"message": "Your backend is live! 🎉"}
