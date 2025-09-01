@@ -1,20 +1,17 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi.responses import FileResponse
+import os
 
+# Create FastAPI app
 app = FastAPI()
 
-# Temporary in-memory database
-class BetCode(BaseModel):
-    code: str
-
+# Route to serve your index.html
 @app.get("/")
-def home():
-    return {"message": "Bet Code Converter API is running!"}
+def read_root():
+    # Automatically locate index.html in the same folder as main.py
+    return FileResponse(os.path.join(os.path.dirname(__file__), "index.html"))
 
-@app.post("/convert")
-def convert_code(data: BetCode):
-    # Fake conversion (you can add real logic later)
-    return {
-        "original_code": data.code,
-        "converted_code": "BET9JA-" + data.code[::-1]  # reverses the code just for now
-    }
+# Optional: Health check (Render uses this sometimes)
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
